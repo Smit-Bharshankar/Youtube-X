@@ -17,7 +17,7 @@ const registerUser = asyncHandler(async ( req , res ) => {
     // return res
 
     const { username, email, fullname, password } = req.body;
-console.log("User Details: ", username, email, fullname, password);
+// console.log("User Details: ", username, email, fullname, password);
 
 // Helper function to check if a string is valid email
 const isValidEmail = (email) => {
@@ -57,24 +57,32 @@ if (!/^[a-zA-Z\s]+$/.test(fullname)) {
     throw new ApiError(400, "Full name must only contain alphabets and spaces");
 }
 
-console.log("All validations passed");
-
+// console.log("All Validations Passed")
 
 // check if user already exits
 const existingUser = await User.findOne({
     $or: [{ username }, { email }],
 })
-console.log("Existing User: ", existingUser) //
+// console.log("Existing User: ", existingUser) 
 
 if (existingUser) {
     throw new ApiError(409, "User already exists with this email or username");
 }
 
 // check for images and avatar
-const avatarLovalPath = req.files?.avatar[0]?.path;
-const coverImageLocalPath = req.files?.coverImage[0]?.path;
+// const avatarLovalPath = req.files?.avatar[0]?.path;
+// const coverImageLocalPath = req.files?.coverImage[0]?.path;
+let avatarLovalPath;
+if (req.files && Array.isArray(req.files.avatar) && req.files.avatar.length > 0) {
+    avatarLovalPath = req.files.avatar[0].path;
+}
 
-console.log(req.files); //
+let coverImageLocalPath;
+if (req.files && Array.isArray(req.files.coverImage) && req.files.coverImage.length > 0) {
+    coverImageLocalPath = req.files.coverImage[0].path;
+}
+
+// console.log(req.files); 
 
  if (!avatarLovalPath) {
     throw new ApiError(400, "Avatar is required") 
@@ -87,6 +95,8 @@ const coverImage = await uploadOnCloudinary(coverImageLocalPath);
 if (!avatar) {
     throw new ApiError(500, "Failed to upload avatar image to Cloudinary");
 }
+
+
 
 // create new user object - create entry in db
 const user = await User.create({

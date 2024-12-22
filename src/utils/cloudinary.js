@@ -20,7 +20,8 @@ import fs from "fs"
                 resource_type: "auto",  
             })
             // file uploaded
-            console.log("File uploaded on Cloudinary: " , "URL:" , uploadResult.url ,"Raw Data: ", uploadResult );
+            // console.log("File uploaded on Cloudinary: " , "URL:" , uploadResult.url ,"Raw Data: ", uploadResult );
+            fs.unlinkSync(localFilePath)
             return uploadResult;
 
         } catch (error) {
