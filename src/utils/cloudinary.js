@@ -21,6 +21,7 @@ import fs from "fs"
             })
             // file uploaded
             // console.log("File uploaded on Cloudinary: " , "URL:" , uploadResult.url ,"Raw Data: ", uploadResult );
+            
             fs.unlinkSync(localFilePath)
             return uploadResult;
 
