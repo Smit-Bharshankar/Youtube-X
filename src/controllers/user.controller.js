@@ -88,7 +88,7 @@ if (existingUser) {
 }
 
 // check for images and avatar
-// const avatarLovalPath = req.files?.avatar[0]?.path;
+// const avatarLocalPath = req.files?.avatar[0]?.path;
 // const coverImageLocalPath = req.files?.coverImage[0]?.path;
 let avatarLovalPath;
 if (req.files && Array.isArray(req.files.avatar) && req.files.avatar.length > 0) {
